@@ -8,6 +8,7 @@ import os
 turn_off = False
 money_machine = MoneyMachine()
 coffee_maker = CoffeeMaker()
+menu = Menu()
 
 # Functions
 def clrscr():
@@ -23,5 +24,19 @@ def clrscr():
 # Main program
 clrscr() 
 
-coffee_maker.report()
-money_machine.report()
+while not turn_off:
+  menu_options = menu.get_items()
+  selection = input(f"What would you like? ({menu_options}): ")
+
+  if selection == "off":
+    turn_off = True
+    print("Switching off the coffee machine...")
+  elif selection == "report":
+    coffee_maker.report()
+    money_machine.report()
+  else:
+    drink = menu.find_drink(selection)
+
+    if coffee_maker.is_resource_sufficient(drink):
+      print("ok")
+    
